@@ -54,9 +54,6 @@ public class UserTransactionProducer {
 	
 	@Produces
 	public UserTransaction getUserTransaction(TransactionManager tm) {
-		//tm.getTransaction();
-		//com.arjuna.ats.arjuna.coordinator.
-		//return new com.arjuna.ats.internal.jta.transaction.arjunacore.UserTransactionImple();
 		UserTransaction utx = com.arjuna.ats.jta.UserTransaction.userTransaction();
 		return utx;
 	}
