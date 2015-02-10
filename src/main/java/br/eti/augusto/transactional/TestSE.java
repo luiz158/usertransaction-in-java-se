@@ -8,17 +8,17 @@ import javax.inject.Inject;
 import javax.transaction.InvalidTransactionException;
 import javax.transaction.TransactionManager;
 import javax.transaction.TransactionRequiredException;
-//import javax.transaction.UserTransaction;
+import javax.transaction.UserTransaction;
 
 import org.jboss.weld.environment.se.events.ContainerInitialized;
 
 public class TestSE {
 	// @Inject //since this was throwing an exception, I used @Resource
 	//@Resource
-	//@Inject
-	//UserTransaction userTransaction;
 	@Inject
-	TransactionManager transactionManager;
+	UserTransaction userTransaction;
+	//@Inject
+	//TransactionManager transactionManager;
 	
 	@Inject
 	BeanMandatory beanMandatory;
@@ -72,12 +72,12 @@ public class TestSE {
 					}
 
 					try {
-						//userTransaction.begin();
-						transactionManager.begin();
+						userTransaction.begin();
+						//transactionManager.begin();
 						System.out.println("Scenario: Invoking within a transaction.");
 						System.out.println(beanMandatory.getId());
-						//userTransaction.commit();
-						transactionManager.commit();
+						userTransaction.commit();
+						//transactionManager.commit();
 					} catch (Exception e) {
 						System.out.println("If you see this, it means there is something wrong!");
 						System.out.println(e.getMessage());
@@ -96,8 +96,8 @@ public class TestSE {
 					}
 
 					try {
-						//userTransaction.begin();
-						transactionManager.begin();
+						userTransaction.begin();
+						//transactionManager.begin();
 						System.out.println("Scenario: Invoking within a transaction. Should get an error.");
 						System.out.println(beanNever.getId());
 						System.out.println("If you see this, it means there is something wrong!");
@@ -110,8 +110,8 @@ public class TestSE {
 						}
 					} finally {
 						try {
-							//userTransaction.rollback();
-							transactionManager.rollback();
+							userTransaction.rollback();
+							//transactionManager.rollback();
 						} catch (Exception e) {
 							System.out.println("Got unexpected exception in finally rollback for NEVER" + e.getMessage());
 						}
@@ -130,12 +130,12 @@ public class TestSE {
 					}
 
 					try {
-						//userTransaction.begin();
-						transactionManager.begin();
+						userTransaction.begin();
+						//transactionManager.begin();
 						System.out.println("Scenario: Invoking within a transaction. Transaction is suspended during the method call. ");
 						System.out.println(beanNotSupported.getId());
-						//userTransaction.commit();
-						transactionManager.commit();
+						userTransaction.commit();
+						//transactionManager.commit();
 					} catch (Exception e) {
 						System.out.println("If you see this, it means there is something wrong!");
 						System.out.println(e.getMessage());
@@ -154,12 +154,12 @@ public class TestSE {
 					}
 
 					try {
-						//userTransaction.begin();
-						transactionManager.begin();
+						userTransaction.begin();
+						//transactionManager.begin();
 						System.out.println("Scenario: Invoking within a transaction.");
 						System.out.println(beanRequired.getId());
-						//userTransaction.commit();
-						transactionManager.commit();
+						userTransaction.commit();
+						//transactionManager.commit();
 					} catch (Exception e) {
 						System.out.println("If you see this, it means there is something wrong!");
 						System.out.println(e.getMessage());
@@ -178,12 +178,12 @@ public class TestSE {
 					}
 
 					try {
-						//userTransaction.begin();
-						transactionManager.begin();
+						userTransaction.begin();
+						//transactionManager.begin();
 						System.out.println("Scenario: Invoking within a transaction. NEW Transaction would be started automatically for the method call. ");
 						System.out.println(beanRequiresNew.getId());
-						//userTransaction.commit();
-						transactionManager.commit();
+						userTransaction.commit();
+						//transactionManager.commit();
 					} catch (Exception e) {
 						System.out.println("If you see this, it means there is something wrong!");
 						System.out.println(e.getMessage());
@@ -202,12 +202,12 @@ public class TestSE {
 					}
 
 					try {
-						//userTransaction.begin();
-						transactionManager.begin();
+						userTransaction.begin();
+						//transactionManager.begin();
 						System.out.println("Scenario: Invoking within a transaction. Method is executed within transaction context.");
 						System.out.println(beanSupports.getId());
-						//userTransaction.commit();
-						transactionManager.commit();
+						userTransaction.commit();
+						//transactionManager.commit();
 					} catch (Exception e) {
 						System.out.println("If you see this, it means there is something wrong!");
 						System.out.println(e.getMessage());

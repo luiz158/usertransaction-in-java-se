@@ -3,6 +3,7 @@ package br.eti.augusto.transactional;
 import javax.annotation.Resource;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.naming.InitialContext;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
@@ -19,6 +20,8 @@ public class UserTransactionProducer {
 
 	@Produces
 	private TransactionManager tmProducer() throws Exception {
+		//System.setProperty("ObjectStoreBaseDir", "target");
+
 		// Start JNDI server
 		NAMING_BEAN.start();
 
@@ -48,5 +51,14 @@ public class UserTransactionProducer {
 	//@Produces
 	//@Resource
 	//private UserTransaction xxx;
+	
+	@Produces
+	public UserTransaction getUserTransaction(TransactionManager tm) {
+		//tm.getTransaction();
+		//com.arjuna.ats.arjuna.coordinator.
+		//return new com.arjuna.ats.internal.jta.transaction.arjunacore.UserTransactionImple();
+		UserTransaction utx = com.arjuna.ats.jta.UserTransaction.userTransaction();
+		return utx;
+	}
 
 }
